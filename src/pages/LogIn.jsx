@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../lib/api/auth";
 
-const SignIn = () => {
+const SignIn = ({ setUser }) => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSignIn = () => {
-    console.log(id, password);
+  const handleSignIn = async () => {
+    const { userId, nickname, avatar } = await login({
+      id: id,
+      password: password,
+    });
+    setUser({ userId, nickname, avatar });
   };
 
   return (
