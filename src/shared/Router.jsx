@@ -6,19 +6,16 @@ import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import Layout from "../components/Layout";
 
-function Router({ user, setUser }) {
+function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout user={user} setUser={setUser} />}>
-          <Route index element={<Home user={user} />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
           <Route path="/detail/:id" element={<Detail />} />
-          <Route
-            path="/profile"
-            element={<Profile user={user} setUser={setUser} />}
-          />
+          <Route path="/profile" element={<Profile />} />
         </Route>
-        <Route path="/login" element={<LogIn setUser={setUser} />} />
+        <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>

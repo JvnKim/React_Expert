@@ -4,7 +4,8 @@ const useStore = create((set) => ({
   user: null,
   month: 1,
   setUser: (user) => set({ user }),
-  setMonth: (month) => set({ month }),
+  setMonth: (newMonth) => set({ month: newMonth }),
+  setExpenses: (newExpenses) => set({ expenses: newExpenses }),
 }));
 
 export default useStore;

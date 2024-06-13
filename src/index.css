@@ -124,5 +124,9 @@ table {
 }
 
 body {
-  background-color: white;
+  background-color: #fffafa;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,13 +1,11 @@
-import { useState } from "react";
+// App.jsx and other components where needed
 import Router from "./shared/Router";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState(null);
-
   return (
     <>
-      <Router user={user} setUser={setUser} />
+      <Router />
     </>
   );
 }

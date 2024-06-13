@@ -2,92 +2,38 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getExpenses } from "../lib/api/expense";
 
-// const ExpenseItemList = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 10px;
-// `;
-
-// const ExpenseItem = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   padding: 15px 20px;
-//   border-radius: 8px;
-//   background-color: #f9f9f9;
-//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-//   transition: transform 0.2s ease-in-out;
-//   cursor: pointer;
-
-//   &:hover {
-//     transform: scale(1.02);
-//   }
-
-//   span {
-//     font-size: 16px;
-//     color: #333;
-//   }
-
-//   span:last-child {
-//     font-weight: bold;
-//     color: #007bff;
-//     flex-shrink: 0;
-//   }
-// `;
-
-// const ExpenseDetails = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: start;
-//   flex-grow: 1;
-//   white-space: nowrap;
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-
-//   span {
-//     &:first-child {
-//       margin-bottom: 5px;
-//       color: #666;
-//       font-size: 14px;
-//     }
-
-//     &:last-child {
-//       white-space: nowrap;
-//       overflow: hidden;
-//       text-overflow: ellipsis;
-//       max-width: 100%;
-//     }
-//   }
-// `;
-
-export default function ExpenseList() {
+export default function ExpenseList({ selectedMonth }) {
   const navigate = useNavigate();
 
-  const {
-    data: expenses = [],
-    // isLoading,
-    // error,
-  } = useQuery({ queryKey: ["expenses"], queryFn: getExpenses });
+  const { data: expenses = [] } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: getExpenses,
+  });
 
-  // const filteredExpenses = expenses.filter(
-  //   (expense) => expense.month === month
-  // );
+  const filteredExpenses = expenses.filter(
+    (expense) => expense.month === selectedMonth
+  );
 
   return (
-    <section>
-      <div>
-        {expenses.map((expense) => (
+    <section className="max-w-4xl mx-auto mt-8">
+      <div className="bg-white shadow-md rounded-md p-4">
+        {filteredExpenses.map((expense) => (
           <div
             key={expense.id}
+            className="cursor-pointer border-b border-gray-200 py-2"
             onClick={() => {
               navigate(`/detail/${expense.id}`);
             }}
           >
-            <div>
-              <span>{expense.date}</span>
-              <span>{`${expense.item} - ${expense.description} (by ${expense.createdBy})`}</span>
+            <div className="flex justify-between items-center mb-2">
+              <div className="flex items-center space-x-2">
+                <span className="text-gray-600 text-sm">{expense.date}</span>
+                <span className="text-gray-900">{`${expense.item} - ${expense.description} (by ${expense.createdBy})`}</span>
+              </div>
+              <span className="text-gray-900">
+                {expense.amount.toLocaleString()} 원
+              </span>
             </div>
-            <span>{expense.amount.toLocaleString()} 원</span>
           </div>
         ))}
       </div>

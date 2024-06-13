@@ -1,61 +1,45 @@
-// const MonthWrapper = styled.div`
-//   display: flex;
-//   flex-wrap: wrap;
-//   gap: 20px;
-//   justify-content: center;
-// `;
-
-// const MonthButton = styled.button`
-//   text-align: center;
-//   font-family: Pretendard, serif;
-//   font-size: 18px;
-//   font-style: normal;
-//   font-weight: 600;
-//   line-height: normal;
-
-//   display: flex;
-//   height: 60px;
-//   padding: 20px;
-//   width: 104px;
-//   justify-content: center;
-//   align-items: center;
-//   flex-shrink: 0;
-//   color: ${(props) =>
-//     props.selected
-//       ? "var(--white-alpha-100, #fff)"
-//       : "var(--black-alpha-100, #000)"};
-//   border-radius: 10px;
-//   border: none;
-//   cursor: pointer;
-//   background: ${(props) =>
-//     !props.selected
-//       ? "var(--black-alpha-100, #F6F7FA)"
-//       : "var(--bg-form, #2EC4B6)"};
-
-//   &:hover {
-//     background: #2ec4b6;
-//     color: #fff;
-//   }
-// `;
+import { useQuery } from "@tanstack/react-query";
+import { getExpenses } from "../lib/api/expense";
+import ExpenseList from "./ExpenseList";
+import useStore from "../zustand/store";
+import CreateExpense from "./CreateExpense";
 
 const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export default function MonthNavigation({ month, setMonth }) {
+export default function MonthNavigation() {
+  const { user, month, setMonth, setExpenses } = useStore();
+
+  const { data: expenses = [] } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: getExpenses,
+    onSuccess: (data) => {
+      setExpenses(data); // 데이터를 Zustand 상태에 저장
+    },
+  });
+
+  const handleMonthClick = (selectedMonth) => {
+    setMonth(selectedMonth); // 선택한 월을 Zustand 상태에 업데이트
+  };
+
   return (
     <section>
-      <div>
-        {MONTHS.map((element) => {
-          return (
-            <button
-              key={element}
-              selected={element === month}
-              onClick={() => {
-                setMonth(element);
-              }}
-            >{`${element}월`}</button>
-          );
-        })}
+      <div className="flex space-x-2">
+        {MONTHS.map((element) => (
+          <button
+            key={element}
+            className={`px-4 py-2 rounded-md focus:outline-none ${
+              month === element
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-800"
+            }`}
+            onClick={() => handleMonthClick(element)}
+          >
+            {`${element}월`}
+          </button>
+        ))}
       </div>
+      <CreateExpense month={month} user={user} />
+      <ExpenseList expenses={expenses} selectedMonth={month} />
     </section>
   );
 }

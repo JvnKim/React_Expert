@@ -68,6 +68,24 @@
       "amount": 10000,
       "description": "책",
       "createdBy": "jvnkim"
+    },
+    {
+      "id": "615b2e33-522d-4d29-bfb9-0c5e8b24805f",
+      "month": 3,
+      "date": "2024-03-01",
+      "item": "책1",
+      "amount": 10000,
+      "description": "책1",
+      "createdBy": "jvnkim"
+    },
+    {
+      "id": "f019c99e-03d6-4bb0-b7ff-5416580fc229",
+      "month": 4,
+      "date": "2024-04-01",
+      "item": "책",
+      "amount": 10000,
+      "description": "책12",
+      "createdBy": "jvnkim"
     }
   ]
 }
