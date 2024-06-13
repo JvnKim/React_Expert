@@ -65,8 +65,8 @@ export default function ExpenseList() {
 
   const {
     data: expenses = [],
-    isLoading,
-    error,
+    // isLoading,
+    // error,
   } = useQuery({ queryKey: ["expenses"], queryFn: getExpenses });
 
   // const filteredExpenses = expenses.filter(
