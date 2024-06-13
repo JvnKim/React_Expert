@@ -12,7 +12,9 @@ const SignIn = ({ setUser }) => {
       id: id,
       password: password,
     });
+    alert("Success Log In");
     setUser({ userId, nickname, avatar });
+    navigate("/");
   };
 
   return (
